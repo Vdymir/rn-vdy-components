@@ -8,7 +8,7 @@ import {
 import React, { useEffect } from 'react';
 import { Dimensions } from 'react-native';
 
-interface SlideProps
+export interface SlideProps
   extends Omit<
     FlatListProps<any>,
     | 'horizontal'

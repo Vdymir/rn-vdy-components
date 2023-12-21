@@ -1,18 +1,16 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'rn-vdy-components';
+import { StyleSheet, View } from 'react-native';
+import { Divider, Link, Typography } from 'rn-vdy-components';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
-  React.useEffect(() => {
-    multiply(3, 7).then(setResult);
-  }, []);
-
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Typography fontSize={20} fontWeight="bold">
+        hola
+      </Typography>
+      <Divider />
+      <Link hrefs="www.google.com">Esto es un link</Link>
     </View>
   );
 }
@@ -27,5 +25,6 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     marginVertical: 20,
+    flexDirection: 'row',
   },
 });

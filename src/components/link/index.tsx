@@ -8,18 +8,18 @@ import {
 } from 'react-native';
 
 export interface LinkProps extends TextProps {
-  hrefs: string;
+  href: string;
 }
 
-export function Link({ hrefs, style, ...rest }: LinkProps) {
+export function Link({ href, style, ...rest }: LinkProps) {
   const handlePress = React.useCallback(async () => {
-    const supported = await Linking.canOpenURL(hrefs);
+    const supported = await Linking.canOpenURL(href);
     if (supported) {
-      await Linking.openURL(hrefs);
+      await Linking.openURL(href);
     } else {
-      throw new Error(`Don't know how to open this URL: ${hrefs}`);
+      throw new Error(`Don't know how to open this URL: ${href}`);
     }
-  }, [hrefs]);
+  }, [href]);
   return (
     <Pressable onPress={handlePress}>
       <Text style={[styles.link, style]} {...rest} />

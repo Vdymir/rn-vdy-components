@@ -8,45 +8,44 @@ import {
 import React, { useEffect } from 'react';
 import { Dimensions } from 'react-native';
 
-export interface SlideProps
+interface SlideProps<T>
   extends Omit<
-    FlatListProps<any>,
+    FlatListProps<T>,
     | 'horizontal'
     | 'showsHorizontalScrollIndicator'
     | 'ref'
     | 'pagingEnabled'
     | 'getItemLayout'
     | 'onScroll'
+    | 'data'
   > {
-  length: number;
+  data: T[];
   autoPlay?: boolean;
   timeInterval?: number;
+  width?: number;
 }
 
-export function Slide({
-  length,
+export function Slide<T>({
+  data,
   autoPlay = false,
   timeInterval = 3000,
+  width = Dimensions.get('screen').width,
   ...restProps
-}: SlideProps) {
-  const refCarousel = React.useRef<FlatList<any[]> | null>();
+}: SlideProps<T[]>) {
+  const refCarousel = React.useRef<FlatList<T[]> | null>();
   const [activeIndex, setActiveIndex] = React.useState(0);
-  const screenWidth = Dimensions.get('screen').width;
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const position = event.nativeEvent.contentOffset.x;
-    const index = position / screenWidth;
+    const index = position / width;
     if (index % 1 === 0) {
       setActiveIndex(index);
     }
   };
-  const getItemLayout = (
-    _: ArrayLike<any> | null | undefined,
-    index: number
-  ) => {
+  const getItemLayout = (_: any, index: number) => {
     return {
-      length: screenWidth,
-      offset: screenWidth * index,
+      length: width,
+      offset: width * index,
       index,
     };
   };
@@ -55,9 +54,9 @@ export function Slide({
     let setIntervalSlide: NodeJS.Timeout | number = 0;
     clearTimeout(setIntervalSlide);
     if (autoPlay) {
-      if (length > 1) {
+      if (data.length > 1) {
         setIntervalSlide = setTimeout(() => {
-          if (activeIndex >= length - 1) {
+          if (activeIndex >= data.length - 1) {
             refCarousel?.current?.scrollToIndex({
               index: 0,
               animated: true,
@@ -74,13 +73,14 @@ export function Slide({
     return () => {
       clearTimeout(setIntervalSlide);
     };
-  }, [activeIndex, length, autoPlay, timeInterval]);
+  }, [activeIndex, autoPlay, data.length, timeInterval]);
 
   return (
-    <View>
+    <View style={{ width }}>
       <FlatList
+        data={data}
         horizontal
-        showsHorizontalScrollIndicator
+        showsHorizontalScrollIndicator={false}
         pagingEnabled
         getItemLayout={getItemLayout}
         onScroll={handleScroll}

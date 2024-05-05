@@ -11,16 +11,16 @@ npm install rn-vdy-components
 ## Usage
 
 ```js
-import { multiply } from 'rn-vdy-components';
+import { Typography } from 'rn-vdy-components';
 
 // ...
 
-const result = await multiply(3, 7);
+const Component = () => {
+    return (
+        <Typography>Hola mundo<Typography>
+    )
+};
 ```
-
-## Contributing
-
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
 
 ## License
 

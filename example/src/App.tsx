@@ -10,7 +10,7 @@ export default function App() {
         hola
       </Typography>
       <Divider />
-      <Link hrefs="www.google.com">Esto es un link</Link>
+      <Link href="www.google.com">Esto es un link</Link>
     </View>
   );
 }
